@@ -1,14 +1,21 @@
 import Foundation
 import ObjectMapper
 
-struct ComputeResponse: Mappable {
+public struct ComputeResponse: Mappable {
   var name: String?
   var key: String?
   var value: Any?
   var epoch: Int? //platform specific
 
-  init?(map: Map){ }
-  mutating func mapping(map: Map) {
+  public init(name: String? = nil, key: String? = nil, value: Any? = nil, epoch: Int? = nil){
+    self.name = name
+    self.key = key
+    self.value = value
+    self.epoch = epoch
+  }
+
+  public init?(map: Map){ }
+  public mutating func mapping(map: Map) {
     name <- map["name"]
     key <- map["key"]
     value <- map["value"]
@@ -17,7 +24,7 @@ struct ComputeResponse: Mappable {
 }
 
 extension ComputeResponse: CustomStringConvertible {
-    var description: String {
+    public var description: String {
         return "[name: \(String(describing: name)), key: \(String(describing: key)), value: \(String(describing: value)), epoch: \(String(describing: epoch))]"
     }
 }
