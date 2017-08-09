@@ -1,14 +1,14 @@
 import Foundation
 import ObjectMapper
 
-struct ComputeRequest: Mappable {
+public struct ComputeRequest: Mappable {
   var `in`: InputData?
   var with: InputData?
   var query: [String]?
   var lookup: [LookupData]?
 
-  init?(map: Map){ }
-  mutating func mapping(map: Map) {
+  public init?(map: Map){ }
+  public mutating func mapping(map: Map) {
     `in` <- map["in"]
     with <- map["with"]
     query <- map["query"]
@@ -17,7 +17,7 @@ struct ComputeRequest: Mappable {
 }
 
 extension ComputeRequest: CustomStringConvertible {
-  var description: String{
+  public var description: String{
     return "[in: \(String(describing: `in`)), with: \(String(describing: with)), query: \(String(describing: query)), lookup: \(String(describing: lookup))]"
   }
 }
