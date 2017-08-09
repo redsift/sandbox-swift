@@ -11,7 +11,6 @@ class ProtocolTests: XCTestCase {
     // Put teardown code here. This method is called after the invocation of each test method in the class.
     super.tearDown()
   }
-  let jsonString = "{\"name\":\"something\"}";
   func testEncodeValuefunc() {
     let cr1 = ComputeResponse(name: "something", key: "key")
     let ec1 = Protocol.encodeValue(data: cr1)
@@ -34,13 +33,32 @@ class ProtocolTests: XCTestCase {
     let ec5 = Protocol.encodeValue(data: cr5)
     XCTAssertEqual(ec5.value as! [UInt8], [UInt8]((cr4.toJSONString()!).utf8), "Type String from JSON should be a encoded as [UInt8]")
   }
+
+  func testToEncodedMessage(){
+    XCTAssertNil(Protocol.toEncodedMessage(data: ["a"], diff: []), "Return of unexpected type should be nil")
+   
+    func toByte(out: [ComputeResponse] = [], diff: [Double]) -> [UInt8]{
+      let stats: [String: Any] = ["result" : diff]
+      let m: [String: Any] = ["out" : out, "stats" : stats ]
+      return [UInt8](String(describing: m).utf8)
+    }
+    let emptyMessage = Protocol.toEncodedMessage(data: nil, diff: [])
+    XCTAssertEqual(emptyMessage!, toByte(out: [], diff: []), "Return of nil should be nil")
+  }
+
+  func testFromEncodedMessage(){
+    XCTAssertNil(Protocol.fromEncodedMessage(bytes: nil), "Return of nil should be nil")
+    XCTAssertNil(Protocol.fromEncodedMessage(bytes: [UInt8](String(describing: "a").utf8)), "Return of failed parsing should be nil")
+  }
 }
 
 #if os(Linux)
 extension ProtocolTests {
   static var allTests : [(String, (ProtocolTests) -> () throws -> Void)] {
     return [
-      ("testEncodeValuefunc", testEncodeValuefunc)
+      ("testEncodeValuefunc", testEncodeValuefunc),
+      ("testToEncodedMessage", testToEncodedMessage),
+      ("testFromEncodedMessage", testFromEncodedMessage)
     ]
   }
 }

@@ -58,9 +58,10 @@ class Protocol {
     return [UInt8](String(describing: m).utf8)
   }
 
-  static func fromEncodedMessage(b: [UInt8]) -> ComputeRequest? {
-     guard let jsonString = String(bytes: b, encoding: .utf8) else{
-      print("Could not decode request")
+  static func fromEncodedMessage(bytes: [UInt8]?) -> ComputeRequest? {
+     guard let b = bytes,
+      let jsonString = String(bytes: b, encoding: .utf8) else{
+      print("Error: Could not decode request")
       return nil
     }
     return ComputeRequest(JSONString: jsonString)
