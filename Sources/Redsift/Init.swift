@@ -1,44 +1,49 @@
 import Foundation
 import ObjectMapper
 
-struct SiftJSON: Mappable {
-  var dag: Dag?
+public struct SiftJSON: Mappable {
+  public var dag: Dag?
 
-  init?(map: Map){ }
-  mutating func mapping(map: Map) {
+  public init?(map: Map){ }
+  public mutating func mapping(map: Map) {
     dag <- map["dag"]
   }
 }
 
-struct Dag: Mappable {
-  var nodes: [Node]?
+public struct Dag: Mappable {
+  public var nodes: [Node]?
   
-  init?(map: Map){ }
-  mutating func mapping(map: Map) {
+  public init?(map: Map){ }
+  public mutating func mapping(map: Map) {
     nodes <- map["nodes"]
   }
 }
 
-struct Node: Mappable {
-  var description: String?
-  var implementation: String?
+public struct Node: Mappable {
+  public var description: String?
+  public var implementation: String?
 
-  init?(map: Map){ }
-  mutating func mapping(map: Map) {
+  public init?(map: Map){ }
+  public mutating func mapping(map: Map) {
     description <- map["#"]
     implementation <- map["implementation.swift"]
   }
 }
 
 
-struct Init{
-  var SIFT_ROOT: String
-  var SIFT_JSON: String
-  var IPC_ROOT: String
-  var DRY = false
-  var sift: SiftJSON
+public struct Init{
+  public var SIFT_ROOT: String
+  public var SIFT_JSON: String
+  public var IPC_ROOT: String
+  public var DRY = false
+  public var sift: SiftJSON
+  public var nodes: [Int] = []
 
-  init?(){
+  public init?(args: [String]){
+    guard args.count > 1 else{
+      print("No nodes to execute")
+      return nil
+    }
     guard let srt = ProcessInfo.processInfo.environment["SIFT_ROOT"], srt != "" else{
       print("Environment SIFT_ROOT not set")
       return nil
