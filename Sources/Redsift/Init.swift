@@ -79,6 +79,14 @@ public struct Init{
       return nil
     }
     
+    for s in args[1..<args.count] {
+      guard let ti = Int(s) else {
+        print("Node index could not be parsed as Int")
+        return nil
+      }
+      self.nodes.append(ti)
+    }
+
     self.SIFT_ROOT = srt
     self.SIFT_JSON = sjt
     self.IPC_ROOT = irt
