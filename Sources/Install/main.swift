@@ -48,12 +48,13 @@ for i in info.nodes {
 
   // checking if the file exists
   let absoluteNodeImpl = "\(info.SIFT_ROOT)/\(nodeImpl)"
-  guard fm.fileExists(atPath: absoluteNodeImpl) else {
+  // Opt in for this implementation when copyItem lower is implemented
+  // guard fm.fileExists(atPath: absoluteNodeImpl) else {
+  guard let contentsOfNode = try? String(contentsOfFile: absoluteNodeImpl, encoding: .utf8) else{
     print("Implementation at index \(i) (\(nodeImpl)) does not exist!")
     break
   }
-
-
+  
   let implPathComp = nodeImpl.components(separatedBy: "/")
   let nodeImplName = implPathComp[implPathComp.count-1]
   availableComputeNodes.append("\(nodeImplName.replacingOccurrences(of: "swift", with:"compute"))")
@@ -72,9 +73,12 @@ for i in info.nodes {
 
   do {
     // copy file
-    try fm.copyItem(atPath: absoluteNodeImpl , toPath: newNodeImpl)
+    // NOT IMPLEMENTED YET:
+    // try fm.copyItem(atPath: absoluteNodeImpl , toPath: newNodeImpl)
+    try contentsOfNode.write(toFile: newNodeImpl, atomically:false, encoding: .utf8)
   }catch let error{
-    print("Copying \(newNodeImpl) to: \(absoluteNodeImpl) file failed: \(error)")
+    // print("Copying \(newNodeImpl) to: \(absoluteNodeImpl) file failed: \(error)")
+    print("Writting to \(newNodeImpl) file failed: \(error)")
   }
 
 }
