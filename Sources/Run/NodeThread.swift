@@ -37,8 +37,6 @@ class NodeThread {
 
         print(endPoint)
 
-        let pollTimeout = TimeInterval(milliseconds: 250)
-
         while (true) {
             print("waiting for a request...")
 
@@ -65,12 +63,6 @@ class NodeThread {
             }
 
             print("and sent \(sent)")
-
-            let socket = try self.socket!.pollSocket(timeout: pollTimeout)
-
-            if (!socket.messageIsWaiting) {
-                break
-            }
         }
         print("Thread \(self.threadName) exiting")
     } catch let error as NanoMessageError {
