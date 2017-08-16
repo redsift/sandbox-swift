@@ -1,7 +1,7 @@
 import Foundation
 
-class Protocol {
-  static func encodeValue(data: ComputeResponse) -> ComputeResponse {
+public class Protocol {
+  public static func encodeValue(data: ComputeResponse) -> ComputeResponse {
     var rdata = data
     guard let valObj = rdata.value else {
       return rdata
@@ -21,7 +21,7 @@ class Protocol {
     return rdata
   }
 
-  static func toEncodedMessage(data: Any?, diff: [Double]) -> [UInt8]?{
+  public static func toEncodedMessage(data: Any?, diff: [Double]) -> [UInt8]?{
     var out: [ComputeResponse] = []
     if data == nil {
     // attempt to unwrap only for non nil values
@@ -47,7 +47,7 @@ class Protocol {
     return [UInt8](String(describing: m).utf8)
   }
 
-  static func toErrorBytes(message: String, stack: String) -> [UInt8]{
+  public static func toErrorBytes(message: String, stack: String) -> [UInt8]{
     let err: [String: String] = [
       "message" : message,
       "stack" : stack
@@ -58,7 +58,7 @@ class Protocol {
     return [UInt8](String(describing: m).utf8)
   }
 
-  static func fromEncodedMessage(bytes: [UInt8]?) -> ComputeRequest? {
+  public static func fromEncodedMessage(bytes: [UInt8]?) -> ComputeRequest? {
      guard let b = bytes,
       let jsonString = String(bytes: b, encoding: .utf8) else{
       print("Error: Could not decode request")
