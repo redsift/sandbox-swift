@@ -9,6 +9,7 @@ guard let info = Init(args: CommandLine.arguments) else{
   exit(0)
 }
 
+// TODO: break should become exits
 var availableComputeNodes: [String] = []
 for i in info.nodes {
   guard let sjdag = info.sift.dag, let sjnodes = sjdag.nodes else {
@@ -57,8 +58,11 @@ for i in info.nodes {
   }catch let error{
     // print("Copying \(newNodeImpl) to: \(absoluteNodeImpl) file failed: \(error)")
     print("Writting to \(newNodeImpl) file failed: \(error)")
+    break
   }
 
 }
 
-writeSiftFile(nodes: availableComputeNodes)
+writeSiftFileUtil("\(SWIFT_SIFT_LOCATION)/Sift.swift", availableComputeNodes)
+
+shellUtil("/usr/bin/swift", ["build"])
