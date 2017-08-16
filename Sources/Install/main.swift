@@ -4,28 +4,6 @@ import Redsift
 let SWIFT_SIFT_LOCATION = "/tmp/sandbox/Sources/Sift"
 let fm = FileManager()
 
-// 
-// Util Funcs
-//
-
-func writeSiftFile(nodes: [String]){
-  // TODO: change Optional Type
-  let siftFileTemplate = "import Redsift\n" +
-    "public struct Sift {\n" +
-    "public static let computes : [(ComputeRequest?) -> Any?] = [\(nodes.joined(separator: ","))]" + 
-      "\n}"
-
-  do {
-    try siftFileTemplate.write(toFile: "\(SWIFT_SIFT_LOCATION)/Sift.swift", atomically:false, encoding: .utf8)
-  }catch let error{
-    print("Writting Sift.swift file failed: \(error)")
-  }
-}
-
-// 
-// End of Util Funcs 
-// 
-
 print("Installation starting...")
 guard let info = Init(args: CommandLine.arguments) else{
   exit(0)
