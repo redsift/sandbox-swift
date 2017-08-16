@@ -4,31 +4,42 @@ import NanoMessage
 import Redsift
 import Sift
 
-// DispatchQueue.global(qos: .userInitiated).async {
 
-// }
-
-
-
-
-let dispatchWorkItem = DispatchWorkItem{
-    print("work item start")
-    sleep(1)
-    print("work item end")
+print("Running...")
+guard let info = Init(args: CommandLine.arguments) else {
+  exit(0)
 }
+
 
 let dg = DispatchGroup()
-//submit work items to the group
-DispatchQueue.global().async(group: dg, execute: dispatchWorkItem)
-let dispatchQueue = DispatchQueue(label: "custom dq")
-dispatchQueue.async(group: dg) {
-    print("block start")
-    sleep(2)
-    print("block end")
+for i in info.nodes {
+  guard let sjdag = info.sift.dag, let sjnodes = sjdag.nodes else {
+    print("something went wrong")
+    exit(1)
+  }
+
+  let node = sjnodes[i]
+  guard let nodeImpl = node.implementation else {
+    print("Requested to install a non-Swift node at index \(i)")
+    exit(1)
+  }
+
+  print("Running node: \(node.description ?? String(describing: i)) :\(nodeImpl)")
+
+  if(info.DRY){
+    continue
+  }
+  let addr = "ipc://\(info.IPC_ROOT)/\(i).sock"
+  let dispatchWorkItem = DispatchWorkItem{
+    print("dispatching node to thread")
+    _ = NodeThread(name: i, addr: addr)
+  }
+  DispatchQueue.global(qos: .userInitiated)
+    .async(group: dg, execute: dispatchWorkItem)
 }
+
+dg.wait()
 //print message when all blocks in the group finish
 dg.notify(queue: DispatchQueue.global()) {
     print("dispatch group over")
 }
-
-dg.wait()
