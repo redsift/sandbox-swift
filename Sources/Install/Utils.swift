@@ -1,10 +1,9 @@
 import Foundation
 
 func writeSiftFileUtil(_ path: String, _ nodes: [String]){
-  // TODO: change Optional Type
   let siftFileTemplate = "import Redsift\n" +
     "public struct Sift {\n" +
-    "public static let computes : [(ComputeRequest?) -> Any?] = [\(nodes.joined(separator: ","))]" + 
+    "public static let computes : [(ComputeRequest) -> Any?] = [\(nodes.joined(separator: ","))]" + 
       "\n}"
 
   do {

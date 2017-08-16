@@ -3,11 +3,11 @@ import ObjectMapper
 
 public struct ComputeResponse: Mappable {
   var name: String?
-  var key: String?
+  var key: String!
   var value: Any?
   var epoch: Int? //platform specific
 
-  public init(name: String? = nil, key: String? = nil, value: Any? = nil, epoch: Int? = nil){
+  public init(name: String? = nil, key: String, value: Any? = nil, epoch: Int? = nil){
     self.name = name
     self.key = key
     self.value = value
