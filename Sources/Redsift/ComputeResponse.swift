@@ -1,25 +1,16 @@
 import Foundation
-import ObjectMapper
 
-public struct ComputeResponse: Mappable {
+public struct ComputeResponse {
   var name: String?
   var key: String!
   var value: Any?
   var epoch: Int? //platform specific
 
-  public init(name: String? = nil, key: String, value: Any? = nil, epoch: Int? = nil){
+  public init(name: String? = nil, key: String, value: Any? = nil, epoch: Int = 0){
     self.name = name
     self.key = key
     self.value = value
     self.epoch = epoch
-  }
-
-  public init?(map: Map){ }
-  public mutating func mapping(map: Map) {
-    name <- map["name"]
-    key <- map["key"]
-    value <- map["value"]
-    epoch <- map["epoch"]
   }
 }
 

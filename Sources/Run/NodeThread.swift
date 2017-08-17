@@ -38,7 +38,7 @@ class NodeThread {
             print("waiting for a request...")
 
             let sent = try self.socket!.receiveMessage(receiveMode: .Blocking, sendMode: .Blocking) { received in
-                print("received \(received)")
+                print("thread: \(self.threadName) received \(received.message.string)")
                 let req = [UInt8](received.message.data)
                 guard let computeReq: ComputeRequest = Protocol.fromEncodedMessage(bytes: req) else {
                   return Message(value: Protocol.toErrorBytes(message: "check for errors in node: \(self.threadName)", stack: ""))
@@ -52,16 +52,15 @@ class NodeThread {
                 let t = Double(end - start) / pow(10, 9)
                 var diff: [Double] = [floor(t)]
                 diff.append((t - diff[0]) * pow(10, 9))
-                print("diff info: \(diff)")
 
-                guard let reply = Protocol.toEncodedMessage(data: resp, diff: diff) else {
+                guard let reply = Protocol.toEncodedMessage(d: resp, diff: diff) else {
                   return Message(value: Protocol.toErrorBytes(message: "check for errors in node: \(self.threadName)", stack: ""))
                 }
 
                 return Message(value: reply)
             }
 
-            print("and sent \(sent)")
+            print("thread: \(self.threadName) sent \(sent.message.string)")
         }
     } catch let error as NanoMessageError {
         print(error, to: &stdError)

@@ -41,7 +41,7 @@ extension InputData: CustomStringConvertible {
 
 struct LookupData: Mappable {
   var bucket: String?
-  var data: Data?
+  var data: DataQuantum?
 
   init?(map: Map){ }
   mutating func mapping(map: Map) {
@@ -56,7 +56,7 @@ extension LookupData: CustomStringConvertible {
   }
 }
 
-struct Data: Mappable {
+struct DataQuantum: Mappable {
   var key: String?
   var value: [UInt8]?
   var epoch: Int? //platform specific
@@ -71,7 +71,7 @@ struct Data: Mappable {
   }
 }
 
-extension Data: CustomStringConvertible {
+extension DataQuantum: CustomStringConvertible {
     var description: String {
         var svalue: String?
         if let v = value {

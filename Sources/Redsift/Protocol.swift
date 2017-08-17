@@ -1,61 +1,67 @@
 import Foundation
+import ObjectMapper
+
+struct ProtocolMessage: Mappable {
+  var out: [ComputeResponseInternal] = []
+  var stats: [String: [Double]] = [:]
+
+  init(_ o: [ComputeResponseInternal], _ s: [String: [Double]]){
+    self.out = o
+    self.stats = s
+  }
+  init?(map: Map){ }
+  mutating func mapping(map: Map) {
+    out <- map["out"]
+    stats <- map["stats"]
+  }
+}
+
+struct ProtocolError: Mappable {
+  var error: [String: String] = [:]
+
+  init(_ e: [String: String]){
+    self.error = e
+  }
+  init?(map: Map){ }
+  mutating func mapping(map: Map) {
+    error <- map["error"]
+  }
+}
 
 public class Protocol {
-  public static func encodeValue(data: ComputeResponse) -> ComputeResponse {
-    var rdata = data
-    guard let valObj = rdata.value else {
-      return rdata
+  public static func toEncodedMessage(d: Any?, diff: [Double]) -> [UInt8]?{
+    var out: [ComputeResponseInternal] = []
+    guard let data = d else {
+      return nil
     }
-    
-    if valObj is [UInt8] { // no-op
-    }
-    // TODO: this probably not needed
-    // else if valObj is String {
-    //   print("This is the String type \(String(describing: valObj))")
-    //   // TODO: might need to treat this as a special case for JSON encoded 
-    //   rdata.value = [UInt8](String(describing: valObj).utf8)
-    // }
-    else{
-      rdata.value = [UInt8](String(describing: valObj).utf8)
-    }
-    return rdata
-  }
 
-  public static func toEncodedMessage(data: Any?, diff: [Double]) -> [UInt8]?{
-    var out: [ComputeResponse] = []
-    if data == nil {
-    // attempt to unwrap only for non nil values
-    }else if data! is ComputeResponse {
-      // might need casting
-      out.append(encodeValue(data: data as! ComputeResponse))
-    }else if data! is [ComputeResponse] {
+    if data is ComputeResponse {
+      out.append(ComputeResponseInternal(cr: data as! ComputeResponse))
+    }else if data is [ComputeResponse] {
       for item in data as! [ComputeResponse] {
-        out.append(encodeValue(data: item))
+        out.append(ComputeResponseInternal(cr: item))
       }
     }else{
       print("node implementation has to return ComputeResponse, Array<ComputeResponse> or nil")
       return nil
     }
 
-    let stats: [String: Any] = [
-      "result" : diff
-    ]
-    let m: [String: Any] = [
-      "out" : out,
-      "stats" : stats
-    ]
-    return [UInt8](String(describing: m).utf8)
+    let m = ProtocolMessage(out, ["result": diff])
+    guard let t = Mapper(shouldIncludeNilValues: true).toJSONString(m) else {
+      print("stringifying ProtocolMessage failed")
+      return nil
+    }
+    return [UInt8](t.utf8)
   }
 
   public static func toErrorBytes(message: String, stack: String) -> [UInt8]{
-    let err: [String: String] = [
-      "message" : message,
-      "stack" : stack
-    ]
-    let m: [String: Any] = [
-      "error" : err
-    ]
-    return [UInt8](String(describing: m).utf8)
+    let m = ProtocolError(["message": message, "stack": stack])
+    print("Error \(m)")
+    guard let t = Mapper(shouldIncludeNilValues: true).toJSONString(m) else {
+      print("stringifying ProtocolError failed")
+      return []
+    }
+    return [UInt8](t.utf8)
   }
 
   public static func fromEncodedMessage(bytes: [UInt8]?) -> ComputeRequest? {
