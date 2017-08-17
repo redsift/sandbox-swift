@@ -1,4 +1,5 @@
 import Foundation
+import Dispatch
 import NanoMessage
 import Redsift
 import Sift
@@ -30,11 +31,7 @@ class NodeThread {
         try self.socket!.setReceiveTimeout(seconds: -1)
         try self.socket!.setSendTimeout(seconds: -1)
 
-
         let endPoint: EndPoint = try self.socket!.createEndPoint(url: url, type: .Bind, name: "reply end-point")
-
-        // ? usleep(TimeInterval(milliseconds: 200))
-
         print(endPoint)
 
         while (true) {
@@ -47,15 +44,17 @@ class NodeThread {
                   return Message(value: Protocol.toErrorBytes(message: "check for errors in node: \(self.threadName)", stack: ""))
                 }
 
-                // let start = Double(DispatchTime.now())
-                let c = Sift.computes[self.threadName]
-                let resp = c(computeReq)
-                // let end = Double(DispatchTime.now())
-                // let t = (end - start) / pow(10, 9)
-                let diff: [Double] = [] //[floor(t)]
-                // diff.append((t - diff[0]) * pow(10, 9))
+                let computeF = Sift.computes[self.threadName]
 
-                guard let reply = Protocol.toEncodedMessage(data: resp,diff: diff) else {
+                let start = DispatchTime.now().uptimeNanoseconds
+                let resp = computeF(computeReq)
+                let end = DispatchTime.now().uptimeNanoseconds
+                let t = Double(end - start) / pow(10, 9)
+                var diff: [Double] = [floor(t)]
+                diff.append((t - diff[0]) * pow(10, 9))
+                print("diff info: \(diff)")
+
+                guard let reply = Protocol.toEncodedMessage(data: resp, diff: diff) else {
                   return Message(value: Protocol.toErrorBytes(message: "check for errors in node: \(self.threadName)", stack: ""))
                 }
 
