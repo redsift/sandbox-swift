@@ -63,7 +63,6 @@ class NodeThread {
 
             print("and sent \(sent)")
         }
-        print("Thread \(self.threadName) exiting")
     } catch let error as NanoMessageError {
         print(error, to: &stdError)
         exit(1)
