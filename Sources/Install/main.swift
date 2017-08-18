@@ -1,12 +1,18 @@
 import Foundation
 import Redsift
 
-let SWIFT_SIFT_LOCATION = "/tmp/sandbox/Sources/Sift"
 let fm = FileManager()
 
 print("Installation starting...")
 guard let info = Init(args: CommandLine.arguments) else{
   exit(0)
+}
+
+var SWIFT_SOURCES_LOCATION = "/tmp/sandbox"
+let sloc = ProcessInfo.processInfo.environment["SWIFT_SOURCES_LOCATION"]
+if sloc != nil && sloc! != "" {
+  SWIFT_SOURCES_LOCATION = sloc!
+  print("Environment SWIFT_SOURCES_LOCATION is set to: \(String(describing: sloc))")
 }
 
 // TODO: break should become exits
@@ -38,7 +44,7 @@ for i in info.nodes {
   let nodeImplName = implPathComp[implPathComp.count-1]
   availableComputeNodes.append("\(nodeImplName.replacingOccurrences(of: "swift", with:"compute"))")
 
-  let newNodeImpl = nodeImpl.replacingOccurrences(of: "server", with: SWIFT_SIFT_LOCATION)
+  let newNodeImpl = nodeImpl.replacingOccurrences(of: "server", with: "\(SWIFT_SOURCES_LOCATION)/Sources/Sift")
   let newImplPath = newNodeImpl.replacingOccurrences(of: "/\(nodeImplName)", with: "")
   
   do {
@@ -63,6 +69,6 @@ for i in info.nodes {
 
 }
 
-writeSiftFileUtil("\(SWIFT_SIFT_LOCATION)/Sift.swift", availableComputeNodes)
+writeSiftFileUtil("\(SWIFT_SOURCES_LOCATION)/Sources/Sift/Sift.swift", availableComputeNodes)
 
 shellUtil("/usr/bin/swift", ["build"])
