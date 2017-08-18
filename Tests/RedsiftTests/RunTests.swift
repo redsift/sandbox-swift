@@ -4,7 +4,7 @@ import XCTest
 import NanoMessage
 @testable import Redsift
 
-func shellUtil(_ launchPath: String,_ arguments: [String]) -> Process{
+func shellUtil(_ launchPath: String,_ arguments: [String], _ wait: Bool = false) -> Process{
   let task = Process()
   task.launchPath = launchPath
   task.arguments = arguments
@@ -13,6 +13,9 @@ func shellUtil(_ launchPath: String,_ arguments: [String]) -> Process{
   task.standardError = FileHandle.standardError
   task.launch()
 
+  if wait {
+    task.waitUntilExit()
+  }
   return task
 }
 
@@ -60,8 +63,7 @@ class RunTests: XCTestCase {
     let cla = ["./.build/debug/Run", "0", "1", "2"]
     setenv("SIFT_ROOT", "/tmp/sandbox/TestFixtures/sift", 1) //key, value, overwrite?
     // Install the nodes
-    _ = shellUtil("./.build/debug/Install", Array(cla[1..<cla.count]))
-    sleep(1)
+    _ = shellUtil("./.build/debug/Install", Array(cla[1..<cla.count]), true)
     DispatchQueue.global().async{
       let t = shellUtil(cla[0], Array(cla[1..<cla.count]))
       self.pids.append(t.processIdentifier)
