@@ -35,8 +35,6 @@ class NodeThread {
         print(endPoint)
 
         while (true) {
-            print("waiting for a request...")
-
             let sent = try self.socket!.receiveMessage(receiveMode: .Blocking, sendMode: .Blocking) { received in
                 print("thread: \(self.threadName) received \(received.message.string)")
                 let req = [UInt8](received.message.data)
@@ -53,7 +51,7 @@ class NodeThread {
                 var diff: [Double] = [floor(t)]
                 diff.append((t - diff[0]) * pow(10, 9))
 
-                guard let reply = Protocol.toEncodedMessage(d: resp, diff: diff) else {
+                guard let reply = Protocol.toEncodedMessage(data: resp, diff: diff) else {
                   return Message(value: Protocol.toErrorBytes(message: "check for errors in node: \(self.threadName)", stack: ""))
                 }
 

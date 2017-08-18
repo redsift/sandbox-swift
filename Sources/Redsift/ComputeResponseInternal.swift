@@ -30,7 +30,6 @@ struct ComputeResponseInternal: Mappable {
       let s = t as! String
       self.value = Optional(Data(bytes: [UInt8](s.utf8)))
     }else{
-      print("This is the else case for \(String(describing: t))")
       do{
         let enc = try JSONSerialization.data(withJSONObject: t)
         self.value = Optional(enc)

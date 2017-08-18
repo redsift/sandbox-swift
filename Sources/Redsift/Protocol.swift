@@ -29,13 +29,11 @@ struct ProtocolError: Mappable {
 }
 
 public class Protocol {
-  public static func toEncodedMessage(d: Any?, diff: [Double]) -> [UInt8]?{
+  public static func toEncodedMessage(data: Any?, diff: [Double]) -> [UInt8]?{
     var out: [ComputeResponseInternal] = []
-    guard let data = d else {
-      return nil
-    }
+    if data == nil {
 
-    if data is ComputeResponse {
+    }else if data is ComputeResponse {
       out.append(ComputeResponseInternal(cr: data as! ComputeResponse))
     }else if data is [ComputeResponse] {
       for item in data as! [ComputeResponse] {
