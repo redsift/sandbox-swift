@@ -14,8 +14,7 @@ class RedsiftInitTests: XCTestCase {
   }
 
   func testInitfunc() {
-
-    let i1 = Init()
+    let i1 = Init(args: [])
     XCTAssertNil(i1) 
   }
 }
