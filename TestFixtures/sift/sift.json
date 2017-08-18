@@ -1,0 +1,30 @@
+{
+  "dag":{
+    "nodes":[
+      {
+        "#": "Test swift node(nil response)",
+        "implementation": {
+          "swift":"server/Node1/Node1.swift"
+        }
+      },
+      {
+        "#": "Test swift node(full ComputeResponse)",
+        "implementation": {
+          "swift":"server/Node2.swift"
+        }
+      },
+      {
+        "#": "Test swift node(illegal return type)",
+        "implementation": {
+          "swift":"server/Node3.swift"
+        }
+      },
+      {
+        "#": "Test false java node",
+        "implementation": {
+          "java":""
+        }
+      }
+    ]
+  }
+}
