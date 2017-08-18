@@ -1,17 +1,11 @@
 import PackageDescription
 
-// let jmap = Package(
-//   name: "Jmap",
-//   targets: [],
-//   dependencies: [],
-//   exclude: []
-// )
-
 let redsift = Package(
   name: "Redsift",
   targets: [
+    Target(name: "Jmap"),
     Target(name: "Redsift"),
-    Target(name: "Sift",dependencies: ["Redsift"]),
+    Target(name: "Sift",dependencies: ["Jmap", "Redsift"]),
     Target(name: "Install",dependencies: ["Redsift"]),
     Target(name: "Run",dependencies: ["Redsift", "Sift"])
   ],
