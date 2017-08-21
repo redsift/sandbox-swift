@@ -6,12 +6,27 @@ import Sift
 
 var stdOut = FileHandle.standardOutput
 var stdError = FileHandle.standardError
-extension FileHandle : TextOutputStream {
+extension FileHandle : TextOutputStream { // for print(to:...)
   public func write(_ string: String) {
     guard let data = string.data(using: .utf8) else { return }
     self.write(data)
   }
 }
+
+// flush immediately, to avoid stdOut buffer
+func putStdOut(_ s: String){
+  guard let d = s.data(using: .utf8) else {
+    return
+  }
+  stdOut.write(d)
+}
+func putStdError(_ s: String){
+  guard let d = s.data(using: .utf8) else {
+    return
+  }
+  stdError.write(d)
+}
+
 
 class NodeThread {
   public var socket: ReplySocket?
@@ -33,18 +48,18 @@ class NodeThread {
         try self.socket!.setSendTimeout(seconds: -1)
 
         let endPoint: EndPoint = try self.socket!.createEndPoint(url: url, type: .Bind, name: "reply end-point")
-        print(endPoint)
+        print(endPoint) // only to keep compiler happy
 
         while (true) {
             let sent = try self.socket!.receiveMessage(receiveMode: .Blocking, sendMode: .Blocking) { received in
-                print("thread: \(self.threadName) received \(received.message.string)", to: &stdOut)
+                putStdOut("thread: \(self.threadName) received \(received.message.string)\n")
                 let req = [UInt8](received.message.data)
                 guard let computeReq: ComputeRequest = Protocol.fromEncodedMessage(bytes: req) else {
                   return Message(value: Protocol.toErrorBytes(message: "check for errors in node: \(self.threadName)", stack: ""))
                 }
 
                 guard self.threadName < Sift.computes.count else {
-                    print("Index (\(self.threadName)) out of bounds for Sift.computes: \(Sift.computes)", to: &stdError)
+                    putStdOut("Index (\(self.threadName)) out of bounds for Sift.computes: \(Sift.computes)\n")
                     exit(1)
                 }
                 let computeF = Sift.computes[self.threadName]
@@ -63,13 +78,13 @@ class NodeThread {
                 return Message(value: reply)
             }
 
-            print("thread: \(self.threadName) sent \(sent.message.string)", to: &stdOut)
+            putStdOut("thread: \(self.threadName) sent \(sent.message.string)\n")
         }
     } catch let error as NanoMessageError {
-        print(error, to: &stdError)
+        putStdError("\(putStdError)\n")
         exit(1)
     } catch {
-        print("an unexpected error '\(error)' has occured in the library libNanoMessage.", to: &stdError)
+        putStdError("an unexpected error '\(error)' has occured in the library libNanoMessage.")
         exit(1)
     }
   }
