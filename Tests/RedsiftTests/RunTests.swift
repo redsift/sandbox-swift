@@ -61,7 +61,7 @@ class RunTests: XCTestCase {
   override class func setUp() {
     super.setUp()
     let cla = ["./.build/debug/Run", "0", "1", "2"]
-    setenv("SIFT_ROOT", "/tmp/sandbox/TestFixtures/sift", 1) //key, value, overwrite?
+    setenv("SIFT_ROOT", "/usr/lib/redsift/sandbox/TestFixtures/sift", 1) //key, value, overwrite?
     // Install the nodes
     _ = shellUtil("./.build/debug/Install", Array(cla[1..<cla.count]), true)
     DispatchQueue.global().async{

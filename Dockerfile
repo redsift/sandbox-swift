@@ -15,15 +15,14 @@ RUN mkdir swift-source && cd swift-source && \
 
 COPY root /
 
-COPY Sources /tmp/sandbox/Sources
-COPY Tests /tmp/sandbox/Tests
-COPY Package.swift /tmp/sandbox
-COPY TestFixtures /tmp/sandbox/TestFixtures
+COPY Sources /usr/lib/redsift/sandbox/Sources
+COPY Tests /usr/lib/redsift/sandbox/Tests
+COPY Package.swift /usr/lib/redsift/sandbox
+COPY TestFixtures /usr/lib/redsift/sandbox/TestFixtures
 
-WORKDIR /tmp/sandbox
+WORKDIR /usr/lib/redsift/sandbox
 
 RUN swift test && swift build -c release && \
-    cp -R /tmp/sandbox /usr/lib/redsift/ && \
     rm -rf /usr/lib/redsift/sandbox/Test* && \
     rm -rf /tmp/sandbox
 
