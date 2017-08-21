@@ -52,7 +52,7 @@ class NodeThread {
 
         while (true) {
             let sent = try self.socket!.receiveMessage(receiveMode: .Blocking, sendMode: .Blocking) { received in
-                putStdOut("thread: \(self.threadName) received \(received.message.string)\n")
+                // putStdOut("thread: \(self.threadName) received \(received.message.string)\n")
                 let req = [UInt8](received.message.data)
                 guard let computeReq: ComputeRequest = Protocol.fromEncodedMessage(bytes: req) else {
                   return Message(value: Protocol.toErrorBytes(message: "check for errors in node: \(self.threadName)", stack: ""))
@@ -78,7 +78,7 @@ class NodeThread {
                 return Message(value: reply)
             }
 
-            putStdOut("thread: \(self.threadName) sent \(sent.message.string)\n")
+            // putStdOut("thread: \(self.threadName) sent \(sent.message.string)\n")
         }
     } catch let error as NanoMessageError {
         putStdError("\(error)\n")
