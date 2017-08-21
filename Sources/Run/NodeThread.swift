@@ -4,6 +4,7 @@ import NanoMessage
 import Redsift
 import Sift
 
+var stdOut = FileHandle.standardOutput
 var stdError = FileHandle.standardError
 extension FileHandle : TextOutputStream {
   public func write(_ string: String) {
@@ -36,14 +37,14 @@ class NodeThread {
 
         while (true) {
             let sent = try self.socket!.receiveMessage(receiveMode: .Blocking, sendMode: .Blocking) { received in
-                print("thread: \(self.threadName) received \(received.message.string)")
+                print("thread: \(self.threadName) received \(received.message.string)", to: &stdOut)
                 let req = [UInt8](received.message.data)
                 guard let computeReq: ComputeRequest = Protocol.fromEncodedMessage(bytes: req) else {
                   return Message(value: Protocol.toErrorBytes(message: "check for errors in node: \(self.threadName)", stack: ""))
                 }
 
                 guard self.threadName < Sift.computes.count else {
-                    print("Index (\(self.threadName)) out of bounds for Sift.computes: \(Sift.computes)")
+                    print("Index (\(self.threadName)) out of bounds for Sift.computes: \(Sift.computes)", to: &stdError)
                     exit(1)
                 }
                 let computeF = Sift.computes[self.threadName]
@@ -62,7 +63,7 @@ class NodeThread {
                 return Message(value: reply)
             }
 
-            print("thread: \(self.threadName) sent \(sent.message.string)")
+            print("thread: \(self.threadName) sent \(sent.message.string)", to: &stdOut)
         }
     } catch let error as NanoMessageError {
         print(error, to: &stdError)
