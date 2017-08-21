@@ -43,6 +43,10 @@ class NodeThread {
                 }
 
                 let computeF = Sift.computes[self.threadName]
+                guard self.threadName < Sift.computes.count else {
+                    print("Index (\(self.threadName)) out of bounds for Sift.computes: \(Sift.computes)")
+                    exit(1)
+                }
 
                 let start = DispatchTime.now().uptimeNanoseconds
                 let resp = computeF(computeReq)
