@@ -51,7 +51,7 @@ class NodeThread {
         print(endPoint) // only to keep compiler happy
 
         while (true) {
-            let sent = try self.socket!.receiveMessage(receiveMode: .Blocking, sendMode: .Blocking) { received in
+            _ = try self.socket!.receiveMessage(receiveMode: .Blocking, sendMode: .Blocking) { received in
                 // putStdOut("thread: \(self.threadName) received \(received.message.string)\n")
                 let req = [UInt8](received.message.data)
                 guard let computeReq: ComputeRequest = Protocol.fromEncodedMessage(bytes: req) else {
