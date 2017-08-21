@@ -56,11 +56,11 @@ func sendMessage(urlToUse: String, message: Message) -> Any?{
 
 class RunTests: XCTestCase {
   static var pids: [Int32] = []
-  let cla = ["./.build/debug/Run", "0", "1", "2"]
+  let cla = ["./.build/release/Run", "0", "1", "2"]
 
   override class func setUp() {
     super.setUp()
-    let cla = ["./.build/debug/Run", "0", "1", "2"]
+    let cla = ["./.build/release/Run", "0", "1", "2"]
     setenv("SIFT_ROOT", "/usr/lib/redsift/sandbox/TestFixtures/sift", 1) //key, value, overwrite?
     // Install the nodes
     _ = shellUtil("./.build/debug/Install", Array(cla[1..<cla.count]), true)
