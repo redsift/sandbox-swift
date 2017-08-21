@@ -1,0 +1,60 @@
+machine:
+  environment:
+    SWIFT_VERSIONS: 3.1.1
+    CONTAINER_NAME: quay.io/redsift/sandbox-swift
+  pre:
+    - sudo curl -L -o /usr/bin/docker 'https://s3-external-1.amazonaws.com/circle-downloads/docker-1.9.0-circleci'
+    - sudo chmod 0755 /usr/bin/docker
+  services:
+    - docker
+
+dependencies:
+  override:
+    - docker info
+    - |
+      set -e
+      # Build Swift 3.1.1
+      docker build -t 3.1.1 -f Dockerfile .
+
+test:
+  override:
+    - |
+      set -e
+      sudo groupadd -g 7438 sandbox
+      sudo adduser --system --no-create-home --shell /bin/false -u 7438 -gid 7438 sandbox
+      sudo chown -R sandbox:sandbox ${PWD}
+      for SV in $SWIFT_VERSIONS
+      do
+        INIT=$(docker inspect -f "{{index .Config.Labels \"io.redsift.sandbox.install\" }}" $SV)
+        echo "Calling init = $INIT"
+        docker run -u 7438:7438 -v $PWD/TestFixtures/sift:/run/sandbox/sift $SV $INIT 0 1 2
+        ls -A $PWD/TestFixtures/sift/server || true
+        RUN=$(docker inspect -f "{{index .Config.Labels \"io.redsift.sandbox.run\" }}" $SV)
+        echo "Calling run = $RUN"
+        docker run -u 7438:7438 -v $PWD/TestFixtures/sift:/run/sandbox/sift:ro -e DRY=true $SV $RUN 0 1 2
+      done
+
+deployment:
+  production:
+    branch: master
+    commands:
+      - docker login -e $QUAY_EMAIL -u $QUAY_USER -p $QUAY_PASS quay.io
+      - |
+        set -e
+        latest=""
+        for SV in $SWIFT_VERSIONS
+        do
+          SWIFT_VERSION=$(docker run -u 7438:7438 -t --entrypoint=/usr/bin/swift $SV --version 2>&1 | head -n 1 | cut -s -d " " -f3)
+          VERSION_ARRAY=(${SWIFT_VERSION//_/ })
+          VERSION=v${VERSION_ARRAY[0]}
+          MAJOR_NUMBER=(${VERSION//./ })
+          MAJOR_VERSION=$MAJOR_NUMBER
+          echo "Tagging as $CONTAINER_NAME:$VERSION"
+          docker tag $SV:latest $CONTAINER_NAME:$VERSION
+          echo "Tagging as $CONTAINER_NAME:$MAJOR_VERSION"
+          docker tag $SV:latest $CONTAINER_NAME:$MAJOR_VERSION
+          latest=$SV:latest
+        done
+        echo "Tagging $latest as $CONTAINER_NAME:latest"
+        docker tag $latest $CONTAINER_NAME:latest
+        docker push $CONTAINER_NAME
