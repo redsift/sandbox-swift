@@ -81,7 +81,7 @@ class NodeThread {
             putStdOut("thread: \(self.threadName) sent \(sent.message.string)\n")
         }
     } catch let error as NanoMessageError {
-        putStdError("\(putStdError)\n")
+        putStdError("\(error)\n")
         exit(1)
     } catch {
         putStdError("an unexpected error '\(error)' has occured in the library libNanoMessage.")
