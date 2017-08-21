@@ -8,12 +8,12 @@ guard let info = Init(args: CommandLine.arguments) else{
   exit(0)
 }
 
-var SWIFT_SOURCES_LOCATION = "/tmp/sandbox"
-let sloc = ProcessInfo.processInfo.environment["SWIFT_SOURCES_LOCATION"]
-if sloc != nil && sloc! != "" {
-  SWIFT_SOURCES_LOCATION = sloc!
-  print("Environment SWIFT_SOURCES_LOCATION is set to: \(String(describing: sloc))")
-}
+var SWIFT_SOURCES_LOCATION = "/usr/lib/redsift/sandbox"
+// let sloc = ProcessInfo.processInfo.environment["SWIFT_SOURCES_LOCATION"]
+// if sloc != nil && sloc! != "" {
+//   SWIFT_SOURCES_LOCATION = sloc!
+//   print("Environment SWIFT_SOURCES_LOCATION is set to: \(String(describing: sloc))")
+// }
 
 // TODO: break should become exits
 var availableComputeNodes: [String] = []

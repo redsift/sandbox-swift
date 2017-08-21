@@ -22,10 +22,10 @@ COPY TestFixtures /tmp/sandbox/TestFixtures
 
 WORKDIR /tmp/sandbox
 
-# ENV SWIFT_SOURCES_LOCATION /tmp/sandbox
-
 RUN swift test && swift build -c release && \
-    cp -R /tmp/sandbox/.build/release/* /usr/bin/redsift
+    cp -R /tmp/sandbox /usr/lib/redsift/ && \
+    rm -rf /usr/lib/redsift/sandbox/Test* && \
+    rm -rf /tmp/sandbox
 
 WORKDIR /run/sandbox/sift
 
