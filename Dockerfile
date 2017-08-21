@@ -26,6 +26,8 @@ RUN swift test && swift build -c release && \
     rm -rf /usr/lib/redsift/sandbox/Test* && \
     rm -rf /tmp/sandbox
 
+RUN chown -R sandbox:sandbox $(pwd)
+
 WORKDIR /run/sandbox/sift
 
 ENTRYPOINT ["/bin/bash"]
