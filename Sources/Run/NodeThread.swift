@@ -42,11 +42,11 @@ class NodeThread {
                   return Message(value: Protocol.toErrorBytes(message: "check for errors in node: \(self.threadName)", stack: ""))
                 }
 
-                let computeF = Sift.computes[self.threadName]
                 guard self.threadName < Sift.computes.count else {
                     print("Index (\(self.threadName)) out of bounds for Sift.computes: \(Sift.computes)")
                     exit(1)
                 }
+                let computeF = Sift.computes[self.threadName]
 
                 let start = DispatchTime.now().uptimeNanoseconds
                 let resp = computeF(computeReq)
