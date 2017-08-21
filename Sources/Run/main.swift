@@ -38,6 +38,9 @@ for i in info.nodes {
     .async(group: dg, execute: dwi)
 }
 
+if(info.DRY){
+  exit(0)
+}
 dg.wait()
 //print message when all blocks in the group finish
 dg.notify(queue: DispatchQueue.global()) {
