@@ -68,10 +68,18 @@ public struct Init{
       print("Unit Test Mode")
     }
 
-    guard let jsonString = try? String(contentsOfFile: "\(srt)/\(sjt)", encoding: .utf8) else{
-      print("Could not read contents of sift.json")
+    var jsonString = ""
+    do{
+      jsonString = try String(contentsOfFile: "\(srt)/\(sjt)", encoding: .utf8)
+      if jsonString == ""{
+        print("Looks like sift.json is empty")
+        return nil
+      }
+    }catch{
+      print("Could not read contents of sift.json: \(error)")
       return nil
     }
+
     guard let jsonData = SiftJSON(JSONString: jsonString) else {
       print("Could not parse sift.json")
       return nil
