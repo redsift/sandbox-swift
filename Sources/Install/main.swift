@@ -71,5 +71,5 @@ for i in info.nodes {
 
 writeSiftFileUtil("\(SWIFT_SOURCES_LOCATION)/Sources/Sift/Sift.swift", availableComputeNodes)
 
-shellUtil("/usr/bin/swift", ["build"])
-shellUtil("/bin/cp", ["\(SWIFT_SOURCES_LOCATION)/.build/debug/Run", "\(info.SIFT_ROOT)/server/_run"])
+shellUtil("/usr/bin/swift", ["build", "-c", "release"])
+shellUtil("/bin/cp", ["\(SWIFT_SOURCES_LOCATION)/.build/release/Run", "\(info.SIFT_ROOT)/server/_run"])
