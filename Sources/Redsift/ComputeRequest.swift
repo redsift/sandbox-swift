@@ -58,14 +58,14 @@ extension LookupData: CustomStringConvertible {
 
 struct DataQuantum: Mappable {
   var key: String?
-  var value: [UInt8]?
+  var value: Data?
   var epoch: Int? //platform specific
   var generation: Int?
 
   init?(map: Map){ }
   mutating func mapping(map: Map) {
     key <- map["key"]
-    value <- map["value"]
+    value <- (map["value"], DataTransform())
     epoch <- map["epoch"]
     generation <- map["generation"]
   }
