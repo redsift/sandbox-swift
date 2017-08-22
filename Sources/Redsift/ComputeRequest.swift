@@ -24,7 +24,7 @@ extension ComputeRequest: CustomStringConvertible {
 
 struct InputData: Mappable {
   var bucket: String?
-  var data: [Data]?
+  var data: [DataQuantum]?
 
   init?(map: Map){ }
   mutating func mapping(map: Map) {
