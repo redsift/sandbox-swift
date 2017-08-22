@@ -26,15 +26,15 @@ public struct InputData: Mappable {
   public var bucket: String?
   public var data: [DataQuantum]?
 
-  init?(map: Map){ }
-  mutating func mapping(map: Map) {
+  public init?(map: Map){ }
+  public mutating func mapping(map: Map) {
     bucket <- map["bucket"]
     data <- map["data"]
   }
 }
 
 extension InputData: CustomStringConvertible {
-  var description: String{
+  public var description: String{
     return "[bucket: \(String(describing: bucket)), data: \(String(describing: data))]"
   }
 }
@@ -43,15 +43,15 @@ public struct LookupData: Mappable {
   public var bucket: String?
   public var data: DataQuantum?
 
-  init?(map: Map){ }
-  mutating func mapping(map: Map) {
+  public init?(map: Map){ }
+  public mutating func mapping(map: Map) {
     bucket <- map["bucket"]
     data <- map["data"]
   }
 }
 
 extension LookupData: CustomStringConvertible {
-  var description: String{
+  public var description: String{
     return "[bucket: \(String(describing: bucket)), data: \(String(describing: data))]"
   }
 }
@@ -62,8 +62,8 @@ public struct DataQuantum: Mappable {
   public var epoch: Int? //platform specific
   public var generation: Int?
 
-  init?(map: Map){ }
-  mutating func mapping(map: Map) {
+  public init?(map: Map){ }
+  public mutating func mapping(map: Map) {
     key <- map["key"]
     value <- (map["value"], DataTransform())
     epoch <- map["epoch"]
@@ -72,10 +72,10 @@ public struct DataQuantum: Mappable {
 }
 
 extension DataQuantum: CustomStringConvertible {
-    var description: String {
+    public var description: String {
         var svalue: String?
         if let v = value {
-            svalue = String(bytes: v, encoding: .utf8)
+            svalue = String(data: v, encoding: .utf8)
         }
         return "[key: \(String(describing: key)), value: \(String(describing: svalue)), epoch: \(String(describing: epoch)), generation: \(String(describing: generation))]"
     }

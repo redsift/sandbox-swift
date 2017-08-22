@@ -13,7 +13,7 @@ public struct Emailer: Mappable {
 }
 
 extension Emailer: CustomStringConvertible {
-  var description: String{
+  public var description: String{
     return "[< \(String(describing: name)) > \(String(describing: email))]"
   }
 }
