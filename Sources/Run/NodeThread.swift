@@ -47,7 +47,7 @@ class NodeThread {
         try self.socket!.setReceiveTimeout(seconds: -1)
         try self.socket!.setSendTimeout(seconds: -1)
 
-        let endPoint: EndPoint = try self.socket!.createEndPoint(url: url, type: .Bind, name: "reply end-point")
+        let endPoint: EndPoint = try self.socket!.createEndPoint(url: url, type: .Connect, name: "reply end-point")
         print(endPoint) // only to keep compiler happy
 
         while (true) {
