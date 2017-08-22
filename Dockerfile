@@ -1,4 +1,4 @@
-FROM quay.io/vchris1416/sandbox:ubuntu16.10
+FROM quay.io/redsift/sandbox:16.10
 MAINTAINER Christos Vontas email: christos@redsift.io version: 1.0.0
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
