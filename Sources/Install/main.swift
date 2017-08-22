@@ -16,7 +16,7 @@ var SWIFT_SOURCES_LOCATION = "/usr/lib/redsift/sandbox"
 // }
 
 // TODO: break should become exits
-var availableComputeNodes: [String] = []
+var availableComputeNodes: [Int: String] = [:]
 for i in info.nodes {
   guard let sjdag = info.sift.dag, let sjnodes = sjdag.nodes else {
     print("something went wrong")
@@ -42,7 +42,7 @@ for i in info.nodes {
   
   let implPathComp = nodeImpl.components(separatedBy: "/")
   let nodeImplName = implPathComp[implPathComp.count-1]
-  availableComputeNodes.append("\(nodeImplName.replacingOccurrences(of: "swift", with:"compute"))")
+  availableComputeNodes[i] = ("\(nodeImplName.replacingOccurrences(of: "swift", with:"compute"))")
 
   let newNodeImpl = nodeImpl.replacingOccurrences(of: "server", with: "\(SWIFT_SOURCES_LOCATION)/Sources/Sift")
   let newImplPath = newNodeImpl.replacingOccurrences(of: "/\(nodeImplName)", with: "")

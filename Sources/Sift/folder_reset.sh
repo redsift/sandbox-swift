@@ -5,6 +5,6 @@ cat > Sift.swift << EOF
 import Redsift
 
 public struct Sift {
-  public static let computes : [(ComputeRequest) -> Any?] = []
+  public static let computes : [Int : (ComputeRequest) -> Any?] = [:]
 }
 EOF

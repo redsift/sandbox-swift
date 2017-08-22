@@ -1,9 +1,10 @@
 import Foundation
 
-func writeSiftFileUtil(_ path: String, _ nodes: [String]){
+func writeSiftFileUtil(_ path: String, _ nodes: [Int : String]){
+  let snodes = String(describing: nodes).replacingOccurrences(of: "\"", with: "")
   let siftFileTemplate = "import Redsift\n" +
     "public struct Sift {\n" +
-    "public static let computes : [(ComputeRequest) -> Any?] = [\(nodes.joined(separator: ","))]" + 
+    "public static let computes : [Int : (ComputeRequest) -> Any?] = \(snodes)" + 
       "\n}"
 
   do {
