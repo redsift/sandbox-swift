@@ -2,10 +2,10 @@ import Foundation
 import ObjectMapper
 
 public struct ComputeRequest: Mappable {
-  var `in`: InputData?
-  var with: InputData?
-  var query: [String]?
-  var lookup: [LookupData]?
+  public var `in`: InputData?
+  public var with: InputData?
+  public var query: [String]?
+  public var lookup: [LookupData]?
 
   public init?(map: Map){ }
   public mutating func mapping(map: Map) {
@@ -22,9 +22,9 @@ extension ComputeRequest: CustomStringConvertible {
   }
 }
 
-struct InputData: Mappable {
-  var bucket: String?
-  var data: [DataQuantum]?
+public struct InputData: Mappable {
+  public var bucket: String?
+  public var data: [DataQuantum]?
 
   init?(map: Map){ }
   mutating func mapping(map: Map) {
@@ -39,9 +39,9 @@ extension InputData: CustomStringConvertible {
   }
 }
 
-struct LookupData: Mappable {
-  var bucket: String?
-  var data: DataQuantum?
+public struct LookupData: Mappable {
+  public var bucket: String?
+  public var data: DataQuantum?
 
   init?(map: Map){ }
   mutating func mapping(map: Map) {
@@ -56,11 +56,11 @@ extension LookupData: CustomStringConvertible {
   }
 }
 
-struct DataQuantum: Mappable {
-  var key: String?
-  var value: Data?
-  var epoch: Int? //platform specific
-  var generation: Int?
+public struct DataQuantum: Mappable {
+  public var key: String?
+  public var value: Data?
+  public var epoch: Int? //platform specific
+  public var generation: Int?
 
   init?(map: Map){ }
   mutating func mapping(map: Map) {

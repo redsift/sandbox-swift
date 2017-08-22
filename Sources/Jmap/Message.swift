@@ -2,31 +2,31 @@ import Foundation
 import ObjectMapper
 
 public struct Message: Mappable {
-  var id: String?
-  var threadId: String?
-  var mailboxIds: [String]?
-  var inReplyToMessageId: String?
-  var isUnread: Bool?
-  var isFlagged: Bool?
-  var isAnswered: Bool?
-  var isDraft: Bool?
-  var hasAttachment: Bool?
-  var headers: [String:String]?
-  var from: Emailer?
-  var to: [Emailer]?
-  var cc: [Emailer]?
-  var bcc: [Emailer]?
-  var replyTo: Emailer?
-  var subject: String?
-  var data: String?
-  var size: Int?
-  var preview: String?
-  var textBody: String?
-  var htmlBody: String?
-  var strippedHtmlBody: String?
-  var attachments: [Attachment]?
-  var attachedMessages: [String: Message]?
-  var user: String?
+  public var id: String?
+  public var threadId: String?
+  public var mailboxIds: [String]?
+  public var inReplyToMessageId: String?
+  public var isUnread: Bool?
+  public var isFlagged: Bool?
+  public var isAnswered: Bool?
+  public var isDraft: Bool?
+  public var hasAttachment: Bool?
+  public var headers: [String:String]?
+  public var from: Emailer?
+  public var to: [Emailer]?
+  public var cc: [Emailer]?
+  public var bcc: [Emailer]?
+  public var replyTo: Emailer?
+  public var subject: String?
+  public var data: String?
+  public var size: Int?
+  public var preview: String?
+  public var textBody: String?
+  public var htmlBody: String?
+  public var strippedHtmlBody: String?
+  public var attachments: [Attachment]?
+  public var attachedMessages: [String: Message]?
+  public var user: String?
 
 
   public init?(map: Map){ }

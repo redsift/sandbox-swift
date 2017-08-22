@@ -2,13 +2,13 @@ import Foundation
 import ObjectMapper
 
 public struct Attachment: Mappable {
-  var blobId: String?
-  var type: String?
-  var name: String?
-  var size: Int?
-  var isInline: Bool?
-  var width: Int?
-  var height: Int?
+  public var blobId: String?
+  public var type: String?
+  public var name: String?
+  public var size: Int?
+  public var isInline: Bool?
+  public var width: Int?
+  public var height: Int?
 
   public init?(map: Map){ }
   public mutating func mapping(map: Map) {
