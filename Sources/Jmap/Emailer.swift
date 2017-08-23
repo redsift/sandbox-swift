@@ -2,8 +2,8 @@ import Foundation
 import ObjectMapper
 
 public struct Emailer: Mappable {
-  public var name: String?
-  public var email: String?
+  public var name: String = ""
+  public var email: String = ""
 
   public init?(map: Map){ }
   public mutating func mapping(map: Map) {
@@ -14,7 +14,6 @@ public struct Emailer: Mappable {
 
 extension Emailer: CustomStringConvertible {
   public var description: String{
-    let _e: Any = "nil"
-    return "[< \(String(describing: name ?? _e)) > \(String(describing: email ?? _e))]"
+    return "[< \(name) > \(email))]"
   }
 }
