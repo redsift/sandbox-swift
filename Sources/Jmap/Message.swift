@@ -58,3 +58,10 @@ public struct Message: Mappable {
     user <- map["user"]
   }
 }
+
+extension Message: CustomStringConvertible {
+    public var description: String {
+      let _e: Any = "nil"
+      return "[id: \(String(describing: id ?? _e)), threadId: \(String(describing: threadId ?? _e)), mailboxIds: \(String(describing: mailboxIds ?? _e)), inReplyToMessageId: \(String(describing: inReplyToMessageId ?? _e)), isUnread: \(String(describing: isUnread ?? _e)), isFlagged: \(String(describing: isFlagged ?? _e)), isAnswered: \(String(describing: isAnswered ?? _e)), isDraft: \(String(describing: isDraft ?? _e)), hasAttachment: \(String(describing: hasAttachment ?? _e)), headers: \(String(describing: headers ?? _e)), from: \(String(describing: from ?? _e)), to: \(String(describing: to ?? _e)), cc: \(String(describing: cc ?? _e)), bcc: \(String(describing: bcc ?? _e)), replyTo: \(String(describing: replyTo ?? _e)), subject: \(String(describing: subject ?? _e)), data: \(String(describing: data ?? _e)), size: \(String(describing: size ?? _e)), preview: \(String(describing: preview ?? _e)), textBody: \(String(describing: textBody ?? _e)), htmlBody: \(String(describing: htmlBody ?? _e)), strippedHtmlBody: \(String(describing: strippedHtmlBody ?? _e)), attachments: \(String(describing: attachments ?? _e)), attachedMessages: \(String(describing: attachedMessages ?? _e)), user: \(String(describing: user ?? _e))]"
+    }
+}
