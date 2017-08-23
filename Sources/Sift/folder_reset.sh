@@ -1,5 +1,5 @@
 #!/bin/bash
-rm -rf ./*.swift ./Node1*
+rm -rf ./*.swift ./Node*
 
 cat > Sift.swift << EOF
 import Redsift
