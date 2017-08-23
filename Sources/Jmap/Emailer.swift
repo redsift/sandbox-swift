@@ -14,6 +14,7 @@ public struct Emailer: Mappable {
 
 extension Emailer: CustomStringConvertible {
   public var description: String{
-    return "[< \(String(describing: name)) > \(String(describing: email))]"
+    let _e: Any = "nil"
+    return "[< \(String(describing: name ?? _e)) > \(String(describing: email ?? _e))]"
   }
 }

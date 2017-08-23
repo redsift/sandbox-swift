@@ -16,6 +16,7 @@ public struct ComputeResponse {
 
 extension ComputeResponse: CustomStringConvertible {
     public var description: String {
-        return "[name: \(String(describing: name)), key: \(String(describing: key)), value: \(String(describing: value)), epoch: \(String(describing: epoch))]"
+      let _e: Any = "nil"
+      return "[name: \(String(describing: name ?? _e)), key: \(String(describing: key ?? _e)), value: \(String(describing: value ?? _e)), epoch: \(String(describing: epoch ?? _e))]"
     }
 }

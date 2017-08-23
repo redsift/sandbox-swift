@@ -18,7 +18,8 @@ public struct ComputeRequest: Mappable {
 
 extension ComputeRequest: CustomStringConvertible {
   public var description: String{
-    return "[in: \(String(describing: `in`)), with: \(String(describing: with)), query: \(String(describing: query)), lookup: \(String(describing: lookup))]"
+    let _e: Any = "nil"
+    return "[in: \(String(describing: `in` ?? _e)), with: \(String(describing: with ?? _e)), query: \(String(describing: query ?? _e)), lookup: \(String(describing: lookup ?? _e))]"
   }
 }
 
@@ -35,7 +36,8 @@ public struct InputData: Mappable {
 
 extension InputData: CustomStringConvertible {
   public var description: String{
-    return "[bucket: \(String(describing: bucket)), data: \(String(describing: data))]"
+    let _e: Any = "nil"
+    return "[bucket: \(String(describing: bucket ?? _e)), data: \(String(describing: data ?? _e))]"
   }
 }
 
@@ -52,7 +54,8 @@ public struct LookupData: Mappable {
 
 extension LookupData: CustomStringConvertible {
   public var description: String{
-    return "[bucket: \(String(describing: bucket)), data: \(String(describing: data))]"
+    let _e: Any = "nil"
+    return "[bucket: \(String(describing: bucket ?? _e)), data: \(String(describing: data ?? _e))]"
   }
 }
 
@@ -73,10 +76,11 @@ public struct DataQuantum: Mappable {
 
 extension DataQuantum: CustomStringConvertible {
     public var description: String {
-        var svalue: String?
-        if let v = value {
-            svalue = String(data: v, encoding: .utf8)
-        }
-        return "[key: \(String(describing: key)), value: \(String(describing: svalue)), epoch: \(String(describing: epoch)), generation: \(String(describing: generation))]"
+      let _e: Any = "nil"
+      var svalue: String?
+      if let v = value {
+          svalue = String(data: v, encoding: .utf8)
+      }
+      return "[key: \(String(describing: key ?? _e)), value: \(String(describing: svalue ?? _e)), epoch: \(String(describing: epoch ?? _e)), generation: \(String(describing: generation ?? _e))]"
     }
 }
