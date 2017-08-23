@@ -2,7 +2,7 @@ import Foundation
 import ObjectMapper
 
 public struct ComputeRequest: Mappable {
-  public var `in`: InputData?
+  public var `in`: InputData = InputData()
   public var with: InputData?
   public var query: [String]?
   public var lookup: [LookupData]?
@@ -19,13 +19,15 @@ public struct ComputeRequest: Mappable {
 extension ComputeRequest: CustomStringConvertible {
   public var description: String{
     let _e: Any = "nil"
-    return "[in: \(String(describing: `in` ?? _e)), with: \(String(describing: with ?? _e)), query: \(String(describing: query ?? _e)), lookup: \(String(describing: lookup ?? _e))]"
+    return "[in: \(String(describing: `in`)), with: \(String(describing: with ?? _e)), query: \(String(describing: query ?? _e)), lookup: \(String(describing: lookup ?? _e))]"
   }
 }
 
 public struct InputData: Mappable {
-  public var bucket: String?
-  public var data: [DataQuantum]?
+  public var bucket: String = ""
+  public var data: [DataQuantum] = []
+
+  public init(){}
 
   public init?(map: Map){ }
   public mutating func mapping(map: Map) {
@@ -36,14 +38,16 @@ public struct InputData: Mappable {
 
 extension InputData: CustomStringConvertible {
   public var description: String{
-    let _e: Any = "nil"
-    return "[bucket: \(String(describing: bucket ?? _e)), data: \(String(describing: data ?? _e))]"
+    return "[bucket: \(bucket), data: \(String(describing: data))]"
   }
 }
 
 public struct LookupData: Mappable {
-  public var bucket: String?
-  public var data: DataQuantum?
+  public var bucket: String = ""
+  public var data = DataQuantum()
+
+  public init() {}
+
 
   public init?(map: Map){ }
   public mutating func mapping(map: Map) {
@@ -54,16 +58,17 @@ public struct LookupData: Mappable {
 
 extension LookupData: CustomStringConvertible {
   public var description: String{
-    let _e: Any = "nil"
-    return "[bucket: \(String(describing: bucket ?? _e)), data: \(String(describing: data ?? _e))]"
+    return "[bucket: \(bucket), data: \(String(describing: data))]"
   }
 }
 
 public struct DataQuantum: Mappable {
-  public var key: String?
+  public var key: String = ""
   public var value: Data?
-  public var epoch: Int? //platform specific
-  public var generation: Int?
+  public var epoch: Int = 0//platform specific
+  public var generation: UInt32 = 0
+
+  public init() {}
 
   public init?(map: Map){ }
   public mutating func mapping(map: Map) {
@@ -81,6 +86,6 @@ extension DataQuantum: CustomStringConvertible {
       if let v = value {
           svalue = String(data: v, encoding: .utf8)
       }
-      return "[key: \(String(describing: key ?? _e)), value: \(String(describing: svalue ?? _e)), epoch: \(String(describing: epoch ?? _e)), generation: \(String(describing: generation ?? _e))]"
+      return "[key: \(key), value: \(String(describing: svalue ?? _e)), epoch: \(epoch), generation: \(generation))]"
     }
 }
