@@ -27,7 +27,7 @@ func sendMessage(urlToUse: String, message: Message) -> Any?{
   do {
       let node = try RequestSocket()
       let endPoint: EndPoint = try node.createEndPoint(url: url, type: .Bind, name: "request end-point")
-      print(endPoint)
+      _ = endPoint
       
       let timeout = TimeInterval(seconds: 10)
       let received = try node.sendMessage(message, sendTimeout: timeout, receiveTimeout: timeout) { sent in

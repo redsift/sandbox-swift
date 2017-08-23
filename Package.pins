@@ -2,6 +2,12 @@
   "autoPin": true,
   "pins": [
     {
+      "package": "CNanoMessage",
+      "reason": null,
+      "repositoryURL": "https://github.com/itssofluffy/CNanoMessage.git",
+      "version": "0.0.2"
+    },
+    {
       "package": "FNVHashValue",
       "reason": null,
       "repositoryURL": "https://github.com/redsift/FNVHashValue.git",
@@ -23,7 +29,7 @@
       "package": "NanoMessage",
       "reason": null,
       "repositoryURL": "https://github.com/redsift/NanoMessage.git",
-      "version": "0.3.3"
+      "version": "0.3.4"
     },
     {
       "package": "ObjectMapper",
