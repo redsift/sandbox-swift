@@ -34,8 +34,8 @@
     {
       "package": "ObjectMapper",
       "reason": null,
-      "repositoryURL": "https://github.com/Hearst-DD/ObjectMapper.git",
-      "version": "2.2.8"
+      "repositoryURL": "https://github.com/redsift/ObjectMapper.git",
+      "version": "2.2.9"
     }
   ],
   "version": 1

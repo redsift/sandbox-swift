@@ -66,7 +66,7 @@ public struct DataQuantum: Mappable {
   public var key: String = ""
   public var value: Data?
   public var epoch: Int = 0//platform specific
-  public var generation: UInt32 = 0
+  public var generation: Int = 0
 
   public init() {}
 

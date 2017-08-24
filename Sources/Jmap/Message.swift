@@ -19,7 +19,7 @@ public struct Message: Mappable {
   public var replyTo: Emailer?
   public var subject: String = ""
   public var date: String = ""
-  public var size: UInt32 = 0
+  public var size: Int = 0
   public var preview: String?
   public var textBody: String?
   public var htmlBody: String?

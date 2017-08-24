@@ -5,7 +5,7 @@ public struct Attachment: Mappable {
   public var blobId: String = ""
   public var type: String = ""
   public var name: String = ""
-  public var size: UInt32 = 0
+  public var size: Int = 0
   public var isInline: Bool = false
 
   public init?(map: Map){ }
