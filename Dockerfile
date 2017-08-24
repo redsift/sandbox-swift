@@ -22,8 +22,9 @@ COPY TestFixtures /usr/lib/redsift/sandbox/TestFixtures
 
 WORKDIR /usr/lib/redsift/sandbox
 
-RUN swift test && swift build -c release && \
+RUN swift test && \
     cd Sources/Sift && ./folder_reset.sh && \
+    swift build -c release && \
     rm -rf /usr/lib/redsift/sandbox/Test* && \
     rm -rf /tmp/sandbox
 
