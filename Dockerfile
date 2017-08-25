@@ -28,7 +28,7 @@ RUN swift test && \
     rm -rf /usr/lib/redsift/sandbox/Test* && \
     rm -rf /tmp/sandbox
 
-RUN chown -R sandbox:sandbox $(pwd)
+RUN chown -R sandbox:sandbox $(pwd) && chmod -R 644 /usr/lib/swift/CoreFoundation/
 
 WORKDIR /run/sandbox/sift
 
