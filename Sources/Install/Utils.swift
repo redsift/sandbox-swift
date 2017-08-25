@@ -14,7 +14,7 @@ func writeSiftFileUtil(_ path: String, _ nodes: [Int : String]){
   }
 }
 
-func shellUtil(_ launchPath: String,_ arguments: [String]) {
+func shellUtil(_ launchPath: String,_ arguments: [String]) -> Int32 {
   let task = Process()
   task.launchPath = launchPath
   task.arguments = arguments
@@ -24,4 +24,5 @@ func shellUtil(_ launchPath: String,_ arguments: [String]) {
   task.launch()
 
   task.waitUntilExit()
+  return task.terminationStatus
 }
