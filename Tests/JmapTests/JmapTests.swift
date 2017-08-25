@@ -12,7 +12,7 @@ class JmapTests: XCTestCase {
     super.tearDown()
   }
 
-  func testParsingfunc() {
+  func testParsingFromJSONfunc() {
     let email1path = URL(fileURLWithPath: "TestFixtures/emails/email1.msg")
     var jsonString: String = ""
     do{
@@ -37,7 +37,7 @@ class JmapTests: XCTestCase {
 extension JmapTests {
   static var allTests : [(String, (JmapTests) -> () throws -> Void)] {
     return [
-      ("testParsingfunc", testParsingfunc)
+      ("testParsingFromJSONfunc", testParsingFromJSONfunc)
     ]
   }
 }
