@@ -54,18 +54,18 @@ func sendMessage(urlToUse: String, message: Message) -> [String: Any]?{
 
 
 let SIFT_ROOT = "/usr/lib/redsift/sandbox/TestFixtures/sift"
-let releaseDir = "\(SIFT_ROOT)/server/.build/release"
+let buildDir = "\(SIFT_ROOT)/server/.build"
 
 class RunTests: XCTestCase {
   static var pids: [Int32] = []
-  let cla = ["\(releaseDir)/Run", "0", "1", "2"]
+  let cla = ["\(buildDir)/release/Run", "0", "1", "2"]
 
   override class func setUp() {
     super.setUp()
-    let cla = ["\(releaseDir)/Run", "0", "1", "2"]
+    let cla = ["\(buildDir)/release/Run", "0", "1", "2"]
     setenv("SIFT_ROOT", SIFT_ROOT, 1) //key, value, overwrite?
     // Install the nodes
-    _ = shellUtil("./.build/debug/Install", Array(cla[1..<cla.count]), true)
+    _ = shellUtil("\(buildDir)/debug/Install", Array(cla[1..<cla.count]), true)
     DispatchQueue.global().async{
       let t = shellUtil(cla[0], Array(cla[1..<cla.count]))
       self.pids.append(t.processIdentifier)
@@ -89,7 +89,7 @@ class RunTests: XCTestCase {
     let m = Message(value: "{\"in\":{}}")
     let url = "ipc://\(info!.IPC_ROOT)/\(self.cla[1]).sock"
     guard let nodeResponse = sendMessage(urlToUse: url, message: m) else {
-      XCTFail("sending message a failed")
+      XCTFail("sending a message failed")
       return
     }
     let out = nodeResponse["out"] as! [String]
@@ -103,7 +103,7 @@ class RunTests: XCTestCase {
     let m = Message(value: "{\"in\":{}}")
     let url = "ipc://\(info!.IPC_ROOT)/\(self.cla[2]).sock"
     guard let nodeResponse = sendMessage(urlToUse: url, message: m) else {
-      XCTFail("sending message a failed")
+      XCTFail("sending a message failed")
       return
     }
     print(nodeResponse)
@@ -116,7 +116,7 @@ class RunTests: XCTestCase {
     let m = Message(value: "{\"in\":{}}")
     let url = "ipc://\(info!.IPC_ROOT)/\(self.cla[3]).sock"
     guard let nodeResponse = sendMessage(urlToUse: url, message: m) else {
-      XCTFail("sending message a failed")
+      XCTFail("sending a message failed")
       return
     }
     let error = nodeResponse["error"] as! [String:String]
