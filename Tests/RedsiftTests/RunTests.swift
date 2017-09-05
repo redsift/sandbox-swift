@@ -53,15 +53,17 @@ func sendMessage(urlToUse: String, message: Message) -> Any?{
 }
 
 
+let SIFT_ROOT = "/usr/lib/redsift/sandbox/TestFixtures/sift"
+let releaseDir = "\(SIFT_ROOT)/server/.build/release"
 
 class RunTests: XCTestCase {
   static var pids: [Int32] = []
-  let cla = ["./.build/release/Run", "0", "1", "2"]
+  let cla = ["\(releaseDir)/Run", "0", "1", "2"]
 
   override class func setUp() {
     super.setUp()
-    let cla = ["./.build/release/Run", "0", "1", "2"]
-    setenv("SIFT_ROOT", "/usr/lib/redsift/sandbox/TestFixtures/sift", 1) //key, value, overwrite?
+    let cla = ["\(releaseDir)/Run", "0", "1", "2"]
+    setenv("SIFT_ROOT", SIFT_ROOT, 1) //key, value, overwrite?
     // Install the nodes
     _ = shellUtil("./.build/debug/Install", Array(cla[1..<cla.count]), true)
     DispatchQueue.global().async{

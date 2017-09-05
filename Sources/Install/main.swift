@@ -71,9 +71,8 @@ for i in info.nodes {
 
 writeSiftFileUtil("\(SWIFT_SOURCES_LOCATION)/Sources/Sift/Sift.swift", availableComputeNodes)
 
-var code = shellUtil("/usr/bin/swift", ["build", "-c", "release"])
+var code = shellUtil("/usr/bin/swift", ["build", "-c", "release", "--build-path", "\(info.SIFT_ROOT)/server/.build"])
 if code > 0 {
   print("Build failed check for errors above.")
   exit(code)
 }
-exit(shellUtil("/bin/cp", ["\(SWIFT_SOURCES_LOCATION)/.build/release/Run", "\(info.SIFT_ROOT)/server/_run"]))
