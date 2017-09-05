@@ -19,7 +19,7 @@ func shellUtil(_ launchPath: String,_ arguments: [String], _ wait: Bool = false)
   return task
 }
 
-func sendMessage(urlToUse: String, message: Message) -> Any?{
+func sendMessage(urlToUse: String, message: Message) -> [String: Any]?{
   guard let url = URL(string: urlToUse) else {
       fatalError("url is not valid")
   }
@@ -38,7 +38,7 @@ func sendMessage(urlToUse: String, message: Message) -> Any?{
       do {
           let a = try JSONSerialization.jsonObject(with: received.message.data) as! [String: Any]
           print("this is the encoded back", a)
-          return a["out"]
+          return a
       }catch {
           print("serialization failed: \(error)")
           return nil
@@ -92,7 +92,8 @@ class RunTests: XCTestCase {
       XCTFail("sending message a failed")
       return
     }
-    XCTAssertEqual(nodeResponse as! [String], [String]())
+    let out = nodeResponse["out"] as! [String]
+    XCTAssertEqual(out, [String]())
   }
 
   func testComputeResponseNodefunc() {
@@ -114,7 +115,12 @@ class RunTests: XCTestCase {
 
     let m = Message(value: "{\"in\":{}}")
     let url = "ipc://\(info!.IPC_ROOT)/\(self.cla[3]).sock"
-    XCTAssertNil(sendMessage(urlToUse: url, message: m))
+    guard let nodeResponse = sendMessage(urlToUse: url, message: m) else {
+      XCTFail("sending message a failed")
+      return
+    }
+    let error = nodeResponse["error"] as! [String:String]
+    XCTAssertNotNil(error["message"]!)
   }
   
 }

@@ -4,26 +4,21 @@ import ObjectMapper
 struct ProtocolMessage: Mappable {
   var out: [ComputeResponseInternal] = []
   var stats: [String: [Double]] = [:]
+  var error: [String: String] = [:]
 
   init(_ o: [ComputeResponseInternal], _ s: [String: [Double]]){
     self.out = o
     self.stats = s
   }
-  init?(map: Map){ }
-  mutating func mapping(map: Map) {
-    out <- map["out"]
-    stats <- map["stats"]
-  }
-}
-
-struct ProtocolError: Mappable {
-  var error: [String: String] = [:]
 
   init(_ e: [String: String]){
     self.error = e
   }
+
   init?(map: Map){ }
   mutating func mapping(map: Map) {
+    out <- map["out"]
+    stats <- map["stats"]
     error <- map["error"]
   }
 }
@@ -45,7 +40,7 @@ public class Protocol {
     }
 
     let m = ProtocolMessage(out, ["result": diff])
-    guard let t = Mapper(shouldIncludeNilValues: true).toJSONString(m) else {
+    guard let t = m.toJSONString() else {
       print("stringifying ProtocolMessage failed")
       return nil
     }
@@ -53,10 +48,10 @@ public class Protocol {
   }
 
   public static func toErrorBytes(message: String, stack: String) -> [UInt8]{
-    let m = ProtocolError(["message": message, "stack": stack])
+    let m = ProtocolMessage(["message": message, "stack": stack])
     print("Error \(m)")
-    guard let t = Mapper(shouldIncludeNilValues: true).toJSONString(m) else {
-      print("stringifying ProtocolError failed")
+    guard let t = m.toJSONString() else {
+      print("stringifying ProtocolMessage failed")
       return []
     }
     return [UInt8](t.utf8)
