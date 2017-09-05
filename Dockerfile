@@ -24,9 +24,8 @@ WORKDIR /usr/lib/redsift/sandbox
 
 RUN swift test && \
     cd Sources/Sift && ./folder_reset.sh && \
-    swift build -c release && \
     rm -rf /usr/lib/redsift/sandbox/Test* && \
-    rm -rf /tmp/sandbox
+    swift build -c release
 
 RUN chown -R sandbox:sandbox $(pwd) && chmod -R 645 /usr/lib/swift/CoreFoundation/
 
