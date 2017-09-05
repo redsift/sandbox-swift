@@ -6,7 +6,7 @@ public struct Response: Mappable {
   public var header: Header?
   public var body: Data?
 
-  public init(_ statusCode: Int, _ header: Header, _ body: Data){
+  public init(_ statusCode: Int, _ header: Header?, _ body: Data?){
     self.statusCode = statusCode
     self.header = header
     self.body = body

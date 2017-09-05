@@ -1,0 +1,11 @@
+{
+  "remote_addr": "faraway.com",
+  "method": "GET",
+  "request_uri": "/simple",
+  "header": {
+    "Content-Type": [
+      "text/html; charset=utf-8"
+    ]
+  },
+  "body": "cGF5bG9hZA=="
+}

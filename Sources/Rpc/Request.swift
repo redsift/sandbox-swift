@@ -8,7 +8,7 @@ public struct Request: Mappable {
   public var header: Header?
   public var body: Data?
 
-  public init(_ remoteAddr: String, _ method: String, _ requestUri: String, _ header: Header, _ body: Data){
+  public init(_ remoteAddr: String, _ method: String, _ requestUri: String, _ header: Header?, _ body: Data?){
     self.remoteAddr = remoteAddr
     self.method = method
     self.requestUri = requestUri
