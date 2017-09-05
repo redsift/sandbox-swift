@@ -4,8 +4,9 @@ let redsift = Package(
   name: "Redsift",
   targets: [
     Target(name: "Jmap"),
+    Target(name: "Rpc"),
     Target(name: "Redsift"),
-    Target(name: "Sift",dependencies: ["Jmap", "Redsift"]),
+    Target(name: "Sift",dependencies: ["Rpc", "Jmap", "Redsift"]),
     Target(name: "Install",dependencies: ["Redsift"]),
     Target(name: "Run",dependencies: ["Redsift", "Sift"])
   ],
