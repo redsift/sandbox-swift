@@ -131,7 +131,7 @@ extension RunTests {
     return [
       ("testEmptyNodefunc", testEmptyNodefunc),
       ("testComputeResponseNodefunc", testComputeResponseNodefunc),
-      ("testWrongReturnNodefunc", testWrongReturnNodefunc)
+      // ("testWrongReturnNodefunc", testWrongReturnNodefunc)
     ]
   }
 }
