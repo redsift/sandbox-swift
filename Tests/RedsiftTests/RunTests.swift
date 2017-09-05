@@ -55,14 +55,13 @@ func sendMessage(urlToUse: String, message: Message) -> [String: Any]?{
 
 let SIFT_ROOT = "/usr/lib/redsift/sandbox/TestFixtures/sift"
 let buildDir = "\(SIFT_ROOT)/server/.build"
+let cla = ["\(buildDir)/release/Run", "0", "1", "2"]
 
 class RunTests: XCTestCase {
   static var pids: [Int32] = []
-  let cla = ["\(buildDir)/release/Run", "0", "1", "2"]
 
   override class func setUp() {
     super.setUp()
-    let cla = ["\(buildDir)/release/Run", "0", "1", "2"]
     setenv("SIFT_ROOT", SIFT_ROOT, 1) //key, value, overwrite?
     // Install the nodes
     _ = shellUtil("\(buildDir)/debug/Install", Array(cla[1..<cla.count]), true)
@@ -83,11 +82,11 @@ class RunTests: XCTestCase {
   }
 
   func testEmptyNodefunc() {
-    let info = Init(args: self.cla)
+    let info = Init(args: cla)
     XCTAssertNotNil(info)
 
     let m = Message(value: "{\"in\":{}}")
-    let url = "ipc://\(info!.IPC_ROOT)/\(self.cla[1]).sock"
+    let url = "ipc://\(info!.IPC_ROOT)/\(cla[1]).sock"
     guard let nodeResponse = sendMessage(urlToUse: url, message: m) else {
       XCTFail("sending a message failed")
       return
@@ -97,11 +96,11 @@ class RunTests: XCTestCase {
   }
 
   func testComputeResponseNodefunc() {
-    let info = Init(args: self.cla)
+    let info = Init(args: cla)
     XCTAssertNotNil(info)
 
     let m = Message(value: "{\"in\":{}}")
-    let url = "ipc://\(info!.IPC_ROOT)/\(self.cla[2]).sock"
+    let url = "ipc://\(info!.IPC_ROOT)/\(cla[2]).sock"
     guard let nodeResponse = sendMessage(urlToUse: url, message: m) else {
       XCTFail("sending a message failed")
       return
@@ -110,11 +109,11 @@ class RunTests: XCTestCase {
   }
 
   func testWrongReturnNodefunc() {
-    let info = Init(args: self.cla)
+    let info = Init(args: cla)
     XCTAssertNotNil(info)
 
     let m = Message(value: "{\"in\":{}}")
-    let url = "ipc://\(info!.IPC_ROOT)/\(self.cla[3]).sock"
+    let url = "ipc://\(info!.IPC_ROOT)/\(cla[3]).sock"
     guard let nodeResponse = sendMessage(urlToUse: url, message: m) else {
       XCTFail("sending a message failed")
       return
