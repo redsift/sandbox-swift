@@ -15,18 +15,17 @@ var SWIFT_SOURCES_LOCATION = "/usr/lib/redsift/sandbox"
 //   print("Environment SWIFT_SOURCES_LOCATION is set to: \(String(describing: sloc))")
 // }
 
-// TODO: break should become exits
 var availableComputeNodes: [Int: String] = [:]
 for i in info.nodes {
   guard let sjdag = info.sift.dag, let sjnodes = sjdag.nodes else {
-    print("something went wrong")
-    break
+    print("something went wrong during initialization")
+    exit(1)
   }
  
   let node = sjnodes[i]
   guard let nodeImpl = node.implementation else {
     print("Requested to install a non-Swift node at index \(i)")
-    break
+    exit(1)
   }
 
   print("Installing node: \(node.description!) : \(nodeImpl)");
@@ -37,7 +36,7 @@ for i in info.nodes {
   // guard fm.fileExists(atPath: absoluteNodeImpl) else {
   guard let contentsOfNode = try? String(contentsOfFile: absoluteNodeImpl, encoding: .utf8) else{
     print("Implementation at index \(i) (\(nodeImpl)) does not exist!")
-    break
+    exit(1)
   }
   
   let implPathComp = nodeImpl.components(separatedBy: "/")
@@ -53,7 +52,7 @@ for i in info.nodes {
   }catch let error {
     print("Failed to create intermediate directories for: \(newImplPath)")
     print(error)
-    break
+    exit(1)
   }
 
   do {
@@ -64,7 +63,7 @@ for i in info.nodes {
   }catch let error{
     // print("Copying \(newNodeImpl) to: \(absoluteNodeImpl) file failed: \(error)")
     print("Writting to \(newNodeImpl) file failed: \(error)")
-    break
+    exit(1)
   }
 
 }
