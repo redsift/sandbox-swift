@@ -48,8 +48,8 @@ public class Protocol {
   }
 
   public static func toErrorBytes(message: String, stack: String) -> [UInt8]{
+    print("toErrorBytes: message:\(message), stack: \(stack)")
     let m = ProtocolMessage(["message": message, "stack": stack])
-    print("Error \(m)")
     guard let t = m.toJSONString() else {
       print("stringifying ProtocolMessage failed")
       return []
