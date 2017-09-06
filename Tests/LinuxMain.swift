@@ -5,8 +5,8 @@ import XCTest
 
 XCTMain([
     testCase(RunTests.allTests),
-    // testCase(RedsiftInitTests.allTests),
-    // testCase(ProtocolTests.allTests),
-    // testCase(JmapTests.allTests),
-    // testCase(RpcTests.allTests)
+    testCase(RedsiftInitTests.allTests),
+    testCase(ProtocolTests.allTests),
+    testCase(JmapTests.allTests),
+    testCase(RpcTests.allTests)
 ])

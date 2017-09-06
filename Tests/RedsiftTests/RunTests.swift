@@ -86,7 +86,7 @@ class RunTests: XCTestCase {
     XCTAssertNotNil(info)
 
     let m = Message(value: "{\"in\":{}}")
-    let url = "ipc://\(info!.IPC_ROOT)/\(cla[3]).sock"
+    let url = "ipc://\(info!.IPC_ROOT)/\(cla[1]).sock"
     guard let nodeResponse = sendMessage(urlToUse: url, message: m) else {
       XCTFail("sending a message failed")
       return
@@ -113,7 +113,7 @@ class RunTests: XCTestCase {
     XCTAssertNotNil(info)
 
     let m = Message(value: "{\"in\":{}}")
-    let url = "ipc://\(info!.IPC_ROOT)/\(cla[1]).sock"
+    let url = "ipc://\(info!.IPC_ROOT)/\(cla[3]).sock"
     guard let nodeResponse = sendMessage(urlToUse: url, message: m) else {
       XCTFail("sending a message failed")
       return
@@ -131,7 +131,7 @@ extension RunTests {
     return [
       ("testEmptyNodefunc", testEmptyNodefunc),
       ("testComputeResponseNodefunc", testComputeResponseNodefunc),
-      ("testWrongReturnNodefunc", testWrongReturnNodefunc)
+      // ("testWrongReturnNodefunc", testWrongReturnNodefunc)
     ]
   }
 }
