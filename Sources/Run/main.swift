@@ -30,7 +30,7 @@ for i in info.nodes {
   }
   let addr = "ipc://\(info.IPC_ROOT)/\(i).sock"
   let dwi = DispatchWorkItem{
-    // print("dispatching node: \(i) to thread...\n")
+    print("dispatching node: \(i) to thread...\n")
     _ = NodeThread(name: i, addr: addr)
   }
   DispatchQueue.global(qos: .userInteractive)

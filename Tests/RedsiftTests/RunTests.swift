@@ -29,7 +29,7 @@ func sendMessage(urlToUse: String, message: Message) -> [String: Any]?{
       let endPoint: EndPoint = try node.createEndPoint(url: url, type: .Bind, name: "request end-point")
       _ = endPoint
       
-      let timeout = TimeInterval(seconds: 10)
+      let timeout = TimeInterval(seconds: 5)
       let received = try node.sendMessage(message, sendTimeout: timeout, receiveTimeout: timeout) { sent in
           print("testSendMessage: sent: \(sent.message.string)")
       }
