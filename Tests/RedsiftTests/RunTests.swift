@@ -129,9 +129,9 @@ class RunTests: XCTestCase {
 extension RunTests {
   static var allTests : [(String, (RunTests) -> () throws -> Void)] {
     return [
-      ("testEmptyNodefunc", testEmptyNodefunc),
-      ("testComputeResponseNodefunc", testComputeResponseNodefunc),
-      // ("testWrongReturnNodefunc", testWrongReturnNodefunc)
+      // ("testEmptyNodefunc", testEmptyNodefunc),
+      // ("testComputeResponseNodefunc", testComputeResponseNodefunc),
+      ("testWrongReturnNodefunc", testWrongReturnNodefunc)
     ]
   }
 }
