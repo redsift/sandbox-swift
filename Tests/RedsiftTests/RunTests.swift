@@ -55,7 +55,7 @@ func sendMessage(urlToUse: String, message: Message) -> [String: Any]?{
 
 let SIFT_ROOT = "/usr/lib/redsift/sandbox/TestFixtures/sift"
 let buildDir = "\(SIFT_ROOT)/server/.build"
-let cla = ["\(buildDir)/release/Run", "0", "1", "2"]
+let cla = ["\(buildDir)/release/Run", "2"]
 
 class RunTests: XCTestCase {
   static var pids: [Int32] = []
@@ -113,7 +113,7 @@ class RunTests: XCTestCase {
     XCTAssertNotNil(info)
 
     let m = Message(value: "{\"in\":{}}")
-    let url = "ipc://\(info!.IPC_ROOT)/\(cla[3]).sock"
+    let url = "ipc://\(info!.IPC_ROOT)/\(cla[1]).sock"
     guard let nodeResponse = sendMessage(urlToUse: url, message: m) else {
       XCTFail("sending a message failed")
       return
