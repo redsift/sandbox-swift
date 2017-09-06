@@ -4,7 +4,7 @@ import ObjectMapper
 struct ProtocolMessage: Mappable {
   var out: [ComputeResponseInternal] = []
   var stats: [String: [Double]] = [:]
-  var error: [String: String] = [:]
+  var error: [String: String]?
 
   init(_ o: [ComputeResponseInternal], _ s: [String: [Double]]){
     self.out = o
