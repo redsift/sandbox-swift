@@ -1,10 +1,10 @@
-FROM quay.io/redsift/sandbox:16.10
+FROM quay.io/redsift/sandbox:latest
 MAINTAINER Christos Vontas email: christos@redsift.io version: 1.0.0
 
 RUN export DEBIAN_FRONTEND=noninteractive && \
     apt-get update && \
     apt-get install -y --no-install-recommends git cmake ninja-build clang uuid-dev libicu-dev icu-devtools libbsd-dev libedit-dev libxml2-dev libsqlite3-dev swig libpython-dev libncurses5-dev pkg-config && \
-    apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    apt-get purge -y && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 LABEL io.redsift.sandbox.install="/usr/bin/redsift/install" io.redsift.sandbox.run="/usr/bin/redsift/run"
 
